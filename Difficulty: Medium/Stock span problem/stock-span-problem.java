@@ -1,0 +1,27 @@
+import java.util.*;
+
+class Solution {
+    public ArrayList<Integer> calculateSpan(int[] arr) {
+        int n = arr.length;
+        ArrayList<Integer> span = new ArrayList<>();
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            // Remove prices smaller or equal to current
+            while (!stack.isEmpty() && arr[stack.peek()] <= arr[i]) {
+                stack.pop();
+            }
+
+            // Calculate span
+            if (stack.isEmpty()) {
+                span.add(i + 1);
+            } else {
+                span.add(i - stack.peek());
+            }
+
+            // Push current index
+            stack.push(i);
+        }
+        return span;
+    }
+}
