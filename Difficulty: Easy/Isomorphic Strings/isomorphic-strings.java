@@ -1,26 +1,28 @@
 class Solution {
     public boolean areIsomorphic(String s1, String s2) {
-
-        int[] map1 = new int[26]; // s1 -> s2
-        int[] map2 = new int[26]; // s2 -> s1
-
+        
+        if (s1.length() != s2.length())
+            return false;
+        
+        int[] map1 = new int[26];
+        int[] map2 = new int[26];
+        
         for (int i = 0; i < s1.length(); i++) {
-            int c1 = s1.charAt(i) - 'a';
-            int c2 = s2.charAt(i) - 'a';
-
-            // If mapping exists, check consistency
-            if (map1[c1] != 0 && map1[c1] != c2 + 1) {
-                return false;
+            char c1 = s1.charAt(i);
+            char c2 = s2.charAt(i);
+            
+            // If not mapped yet
+            if (map1[c1 - 'a'] == 0 && map2[c2 - 'a'] == 0) {
+                map1[c1 - 'a'] = c2;
+                map2[c2 - 'a'] = c1;
+            } 
+            // If already mapped, check consistency
+            else {
+                if (map1[c1 - 'a'] != c2)
+                    return false;
             }
-            if (map2[c2] != 0 && map2[c2] != c1 + 1) {
-                return false;
-            }
-
-            // Store mapping
-            map1[c1] = c2 + 1;
-            map2[c2] = c1 + 1;
         }
-
+        
         return true;
     }
 }
