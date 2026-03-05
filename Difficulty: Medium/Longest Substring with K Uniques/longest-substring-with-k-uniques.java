@@ -1,31 +1,39 @@
-import java.util.*;
-
 class Solution {
     public int longestKSubstr(String s, int k) {
+        
+        int n = s.length();
+        int[] freq = new int[26];
+        
         int left = 0;
+        int distinctCount = 0;
         int maxLen = -1;
-
-        Map<Character, Integer> map = new HashMap<>();
-
-        for (int right = 0; right < s.length(); right++) {
+        
+        for (int right = 0; right < n; right++) {
+            
+            // Add current character
             char ch = s.charAt(right);
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
-
-            // Shrink window if distinct characters exceed k
-            while (map.size() > k) {
+            if (freq[ch - 'a'] == 0) {
+                distinctCount++;
+            }
+            freq[ch - 'a']++;
+            
+            // Shrink window if distinct > k
+            while (distinctCount > k) {
                 char leftChar = s.charAt(left);
-                map.put(leftChar, map.get(leftChar) - 1);
-                if (map.get(leftChar) == 0) {
-                    map.remove(leftChar);
+                freq[leftChar - 'a']--;
+                
+                if (freq[leftChar - 'a'] == 0) {
+                    distinctCount--;
                 }
                 left++;
             }
-
-            // Update result if exactly k distinct characters
-            if (map.size() == k) {
+            
+            // If exactly k distinct characters
+            if (distinctCount == k) {
                 maxLen = Math.max(maxLen, right - left + 1);
             }
         }
+        
         return maxLen;
     }
 }
