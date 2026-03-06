@@ -1,46 +1,50 @@
 class Solution {
-    public static String smallestWindow(String s, String p) {
-        if (p.length() > s.length()) return "";
+    public static String minWindow(String s, String p) {
+
+        if (s.length() < p.length()) return "";
 
         int[] freq = new int[26];
 
-        // Step 1: Store frequency of characters in p
         for (char c : p.toCharArray()) {
             freq[c - 'a']++;
         }
 
-        int left = 0, right = 0;
-        int required = p.length();
+        int left = 0;
+        int count = p.length();
+
         int minLen = Integer.MAX_VALUE;
         int start = 0;
 
-        // Step 2: Sliding window
-        while (right < s.length()) {
-            char rChar = s.charAt(right);
+        for (int right = 0; right < s.length(); right++) {
 
-            if (freq[rChar - 'a'] > 0) {
-                required--;
-            }
-            freq[rChar - 'a']--;
-            right++;
+            char ch = s.charAt(right);
 
-            // Step 3: Try to shrink window
-            while (required == 0) {
-                if (right - left < minLen) {
-                    minLen = right - left;
+            if (freq[ch - 'a'] > 0)
+                count--;
+
+            freq[ch - 'a']--;
+
+            while (count == 0) {
+
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
                     start = left;
                 }
 
-                char lChar = s.charAt(left);
-                freq[lChar - 'a']++;
+                char leftChar = s.charAt(left);
 
-                if (freq[lChar - 'a'] > 0) {
-                    required++;
-                }
+                freq[leftChar - 'a']++;
+
+                if (freq[leftChar - 'a'] > 0)
+                    count++;
+
                 left++;
             }
         }
 
-        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+        if (minLen == Integer.MAX_VALUE)
+            return "";
+
+        return s.substring(start, start + minLen);
     }
 }
