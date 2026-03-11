@@ -1,16 +1,14 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
-    public static int getMaxVal(int arr[], int k) {
+    public int getMaxVal(List<Integer> arr, int k) {
+        Collections.sort(arr);   // sort in ascending order
         
-        Arrays.sort(arr);  // sort array
-        
-        int n = arr.length;
+        int n = arr.size();
         int sum = 0;
         
-        // pick k largest elements
-        for(int i = n-1; i >= n-k; i--){
-            sum += arr[i];
+        for(int i = n - 1; i >= n - k; i--) {
+            sum += arr.get(i);
         }
         
         return sum;
