@@ -1,0 +1,30 @@
+class Solution {
+    public int totalWays(int[] arr, int target) {
+        
+        int totalSum = 0;
+        
+        for(int num : arr)
+            totalSum += num;
+        
+        // Edge cases
+        if(Math.abs(target) > totalSum)
+            return 0;
+        
+        if((target + totalSum) % 2 != 0)
+            return 0;
+        
+        int subsetSum = (target + totalSum) / 2;
+        
+        // DP array
+        int dp[] = new int[subsetSum + 1];
+        dp[0] = 1;
+        
+        for(int num : arr){
+            for(int j = subsetSum; j >= num; j--){
+                dp[j] += dp[j - num];
+            }
+        }
+        
+        return dp[subsetSum];
+    }
+}
