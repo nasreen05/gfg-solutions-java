@@ -1,15 +1,5 @@
 class Solution {
-
-    String modify(String s) {
-        
-        StringBuilder result = new StringBuilder();
-        
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) != ' ') {
-                result.append(s.charAt(i));
-            }
-        }
-        
-        return result.toString();
+    String removeSpaces(String s) {
+        return s.replace(" ", "");
     }
 }
