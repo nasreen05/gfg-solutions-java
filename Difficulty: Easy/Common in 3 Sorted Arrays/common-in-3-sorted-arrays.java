@@ -1,49 +1,36 @@
 import java.util.*;
 
 class Solution {
-    // Function to find common elements in three arrays.
-    public List<Integer> commonElements(List<Integer> arr1, List<Integer> arr2,
-                                        List<Integer> arr3) {
-        
-        List<Integer> result = new ArrayList<>();
+    public ArrayList<Integer> commonElements(int[] a, int[] b, int[] c) {
+        ArrayList<Integer> result = new ArrayList<>();
         
         int i = 0, j = 0, k = 0;
         
-        while (i < arr1.size() && j < arr2.size() && k < arr3.size()) {
+        while (i < a.length && j < b.length && k < c.length) {
             
-            int a = arr1.get(i);
-            int b = arr2.get(j);
-            int c = arr3.get(k);
-            
-            // If all three are equal
-            if (a == b && b == c) {
+            // If all are equal → common element found
+            if (a[i] == b[j] && b[j] == c[k]) {
+                result.add(a[i]);
                 
-                result.add(a);
+                int val = a[i];
                 
-                // Skip duplicates in arr1
-                while (i < arr1.size() && arr1.get(i) == a) i++;
-                
-                // Skip duplicates in arr2
-                while (j < arr2.size() && arr2.get(j) == b) j++;
-                
-                // Skip duplicates in arr3
-                while (k < arr3.size() && arr3.get(k) == c) k++;
-            }
-            
-            // Move the pointer of smallest element
-            else if (a < b) {
-                i++;
-            }
-            else if (b < c) {
-                j++;
+                // Skip duplicates in all arrays
+                while (i < a.length && a[i] == val) i++;
+                while (j < b.length && b[j] == val) j++;
+                while (k < c.length && c[k] == val) k++;
             }
             else {
-                k++;
+                // Move the pointer of the smallest element
+                if (a[i] < b[j]) {
+                    i++;
+                } 
+                else if (b[j] < c[k]) {
+                    j++;
+                } 
+                else {
+                    k++;
+                }
             }
-        }
-        
-        if (result.size() == 0) {
-            result.add(-1);
         }
         
         return result;
