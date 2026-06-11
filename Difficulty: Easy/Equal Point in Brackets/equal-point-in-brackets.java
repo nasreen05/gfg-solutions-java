@@ -1,0 +1,25 @@
+class Solution {
+    public int findIndex(String s) {
+        int n = s.length();
+
+        int closeRight = 0;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == ')')
+                closeRight++;
+        }
+
+        int openLeft = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (openLeft == closeRight)
+                return i;
+
+            if (s.charAt(i) == '(')
+                openLeft++;
+            else
+                closeRight--;
+        }
+
+        return n; // check split after the last character
+    }
+}
